@@ -1,0 +1,196 @@
+identity:
+  name: polardb4ai_llm_config_editor
+  author: polardb4ai
+  label:
+    en_US: llm_config_editor
+    zh_Hans: 配置表编辑器
+description:
+    human:
+        en_US: LLM config editor, used to insert configuration table data. If you wish to perform pre-processing on the problem or post-processing on the final generated SQL, you can configure it accordingly through the configuration table.
+        zh_Hans: 配置表（config）编辑器，配置表用于对问题进行前置处理，或对最终生成的SQL进行后置处理。
+    llm: 
+        LLM config editor, used to insert configuration table data. If you wish to perform pre-processing on the problem or post-processing on the final generated SQL, you can configure it accordingly through the configuration table.
+parameters:
+    - name: config_id1
+      type: string
+      required: false
+      label:
+          en_US: config_id
+          zh_Hans: ID 1
+      human_description:
+          en_US: None
+          zh_Hans: 请填写config_ID。
+      llm_description: None
+      form: form
+    - name: text_condition1
+      type: string
+      required: false
+      label:
+          en_US: text_condition
+          zh_Hans: 匹配字段 1
+      human_description:
+          en_US: None
+          zh_Hans: 请填写匹配字段。
+      llm_description: None
+      form: form
+    - name: formula_function1
+      type: string
+      required: false
+      label:
+          en_US: formula_function1
+          zh_Hans: 业务信息1
+      human_description:
+          en_US: None
+          zh_Hans: 请填写业务信息（formula_function）。
+      llm_description: None
+      form: form
+    - name: is_functional1
+      type: select
+      required: false
+      label:
+          en_US: is functional or not(1/0)
+          zh_Hans: 是否生效
+      human_description:
+          en_US: Please select this config is functional or not
+          zh_Hans: 请选择这条config是否生效
+      llm_description: 
+          This parameter determines the config is functional or not.
+      form: form
+      options:
+          - value: 1
+            label:
+              en_US: Y
+              zh_Hans: 生效
+          - value: 0
+            label:
+              en_US: N
+              zh_Hans: 不生效
+          - value: 
+            label:
+              en_US: empty
+              zh_Hans: 空
+
+    - name: config_id2
+      type: string
+      required: false
+      label:
+          en_US: config_id
+          zh_Hans: ID 2
+      human_description:
+          en_US: None
+          zh_Hans: 请填写config_ID。
+      llm_description: None
+      form: form
+    - name: text_condition2
+      type: string
+      required: false
+      label:
+          en_US: text_condition
+          zh_Hans: 匹配字段 2
+      human_description:
+          en_US: None
+          zh_Hans: 请填写匹配字段。
+      llm_description: None
+      form: form
+    - name: formula_function2
+      type: string
+      required: false
+      label:
+          en_US: formula_function2
+          zh_Hans: 业务信息 2
+      human_description:
+          en_US: None
+          zh_Hans: 请填写业务信息（formula_function）。
+      llm_description: None
+      form: form
+    - name: is_functional2
+      type: select
+      required: false
+      label:
+          en_US: is functional or not
+          zh_Hans: 是否生效
+      human_description:
+          en_US: Please select this config is functional or not
+          zh_Hans: 请选择这条config是否生效
+      llm_description: 
+          This parameter determines the config is functional or not.
+      form: form
+      options:
+          - value: 1
+            label:
+              en_US: Y
+              zh_Hans: 生效
+          - value: 0
+            label:
+              en_US: N
+              zh_Hans: 不生效
+          - value: 
+            label:
+              en_US: empty
+              zh_Hans: 空
+
+
+    # 数据库连接参数
+    - name: polardb_host
+      type: string
+      required: true
+      label:
+          en_US: Database Host
+          zh_Hans: 数据库主机
+      human_description:
+          en_US: The hostname or IP address of the MySQL database server.
+          zh_Hans: MySQL 数据库服务器的主机名或 IP 地址。
+      llm_description: The hostname/IP of the MySQL server (e.g., 'localhost' or '192.168.1.100').
+      form: form
+
+    - name: polardb_port
+      type: string
+      required: true
+      label:
+          en_US: Port
+          zh_Hans: 端口
+      human_description:
+          en_US: Port number to connect to the database (default is 3306).
+          zh_Hans: 数据库连接端口（默认为 3306）。
+      llm_description: Port number for database connection (default 3306).
+      form: form
+
+    - name: polardb_user
+      type: string
+      required: true
+      label:
+          en_US: Username
+          zh_Hans: 用户名
+      human_description:
+          en_US: Username for authenticating to the database.
+          zh_Hans: 连接数据库的用户名。
+      llm_description: Username to access the MySQL database.
+      form: form
+
+    - name: polardb_password
+      type: string
+      required: true
+      label:
+          en_US: Password
+          zh_Hans: 密码
+      human_description:
+          en_US: Password for the database user.
+          zh_Hans: 数据库用户的密码。
+      llm_description: Password for the database user (do not expose in logs).
+      form: form
+
+    - name: polardb_database
+      type: string
+      required: true
+      label:
+          en_US: Database Name
+          zh_Hans: 数据库名称
+      human_description:
+          en_US: Name of the database to connect to.
+          zh_Hans: 要连接的数据库名称。
+      llm_description: Name of the target database (e.g., 'mydb').
+      form: form
+
+extra:
+    python:
+        source: tools/polardb4ai_llm_config_editor.py

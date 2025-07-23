@@ -1,0 +1,120 @@
+identity:
+  name: polardb4ai_task_monitor
+  author: polardb4ai
+  label:
+    en_US: task_monitor
+    zh_Hans: 任务监控器
+description:
+    human: 
+        en_US: task_monitor
+        zh_Hans: 监控离线任务状态，确认任务完成后进入下一个节点。离线任务包括：检索索引表构造器、问题模板编辑器。
+    llm: 
+        task_monitor
+parameters:
+    - name: task_id
+      type: string
+      required: true
+      label:
+          en_US: task_id
+          zh_Hans: 任务ID
+      human_description:
+          en_US: task_id
+          zh_Hans: 任务ID
+      llm_description: task_id
+      form: llm
+    - name: estimated_completion_time
+      type: select
+      required: false
+      label:
+          en_US: Estimated completion time
+          zh_Hans: （可选）预估完成时间
+      human_description:
+          en_US: Estimated completion time
+          zh_Hans: 辅助采样，按经验选择
+      llm_description: Estimated completion time
+      form: form
+      options:
+          - value: 0
+            label:
+              en_US: "< 5min"
+              zh_Hans: 小于5分钟
+          - value: 1
+            label:
+              en_US: "5min - 30min"
+              zh_Hans: 5分钟 至 30分钟
+          - value: 0
+            label:
+              en_US: "30min - 2h"
+              zh_Hans: 30分钟 至 两小时
+          - value: 1
+            label:
+              en_US: "2h - 10h"
+              zh_Hans: 两小时 至 十小时
+          - value: 1
+            label:
+              en_US: "> 10h"
+              zh_Hans: 十小时以上
+    # 数据库连接参数
+    - name: polardb_host
+      type: string
+      required: true
+      label:
+          en_US: Database Host
+          zh_Hans: 数据库主机
+      human_description:
+          en_US: The hostname or IP address of the MySQL database server.
+          zh_Hans: MySQL 数据库服务器的主机名或 IP 地址。
+      llm_description: The hostname/IP of the MySQL server (e.g., 'localhost' or '192.168.1.100').
+      form: form
+
+    - name: polardb_port
+      type: string
+      required: true
+      label:
+          en_US: Port
+          zh_Hans: 端口
+      human_description:
+          en_US: Port number to connect to the database (default is 3306).
+          zh_Hans: 数据库连接端口（默认为 3306）。
+      llm_description: Port number for database connection (default 3306).
+      form: form
+
+    - name: polardb_user
+      type: string
+      required: true
+      label:
+          en_US: Username
+          zh_Hans: 用户名
+      human_description:
+          en_US: Username for authenticating to the database.
+          zh_Hans: 连接数据库的用户名。
+      llm_description: Username to access the MySQL database.
+      form: form
+
+    - name: polardb_password
+      type: string
+      required: true
+      label:
+          en_US: Password
+          zh_Hans: 密码
+      human_description:
+          en_US: Password for the database user.
+          zh_Hans: 数据库用户的密码。
+      llm_description: Password for the database user (do not expose in logs).
+      form: form
+
+    - name: polardb_database
+      type: string
+      required: true
+      label:
+          en_US: Database Name
+          zh_Hans: 数据库名称
+      human_description:
+          en_US: Name of the database to connect to.
+          zh_Hans: 要连接的数据库名称。
+      llm_description: Name of the target database (e.g., 'mydb').
+      form: form
+
+extra: # 额外配置
+    python:
+        source: tools/polardb4ai_task_monitor.py # 指向实现该工具逻辑的 Python 文件

@@ -1,0 +1,77 @@
+identity:
+  name: polardb4ai_llm_config_show
+  author: polardb4ai
+  label:
+    en_US: llm_config_show
+    zh_Hans: 配置表看板
+description:
+    human:
+        en_US: Config dashboard, displaying all the contents of the configuration table.
+        zh_Hans: 配置表（config）看板，展示配置表中的内容
+    llm:
+        Config dashboard, displaying all the contents of the configuration table.
+parameters:
+    # 数据库连接参数
+    - name: polardb_host
+      type: string
+      required: true
+      label:
+          en_US: Database Host
+          zh_Hans: 数据库主机
+      human_description:
+          en_US: The hostname or IP address of the MySQL database server.
+          zh_Hans: MySQL 数据库服务器的主机名或 IP 地址。
+      llm_description: The hostname/IP of the MySQL server (e.g., 'localhost' or '192.168.1.100').
+      form: form
+
+    - name: polardb_port
+      type: string
+      required: true
+      label:
+          en_US: Port
+          zh_Hans: 端口
+      human_description:
+          en_US: Port number to connect to the database (default is 3306).
+          zh_Hans: 数据库连接端口（默认为 3306）。
+      llm_description: Port number for database connection (default 3306).
+      form: form
+
+    - name: polardb_user
+      type: string
+      required: true
+      label:
+          en_US: Username
+          zh_Hans: 用户名
+      human_description:
+          en_US: Username for authenticating to the database.
+          zh_Hans: 连接数据库的用户名。
+      llm_description: Username to access the MySQL database.
+      form: form
+
+    - name: polardb_password
+      type: string
+      required: true
+      label:
+          en_US: Password
+          zh_Hans: 密码
+      human_description:
+          en_US: Password for the database user.
+          zh_Hans: 数据库用户的密码。
+      llm_description: Password for the database user (do not expose in logs).
+      form: form
+
+    - name: polardb_database
+      type: string
+      required: true
+      label:
+          en_US: Database Name
+          zh_Hans: 数据库名称
+      human_description:
+          en_US: Name of the database to connect to.
+          zh_Hans: 要连接的数据库名称。
+      llm_description: Name of the target database (e.g., 'mydb').
+      form: form
+
+extra:
+    python:
+        source: tools/polardb4ai_llm_config_show.py

@@ -1,0 +1,24 @@
+identity:
+  author: polardb4ai
+  name: polardb4ai_db_agent
+  label:
+    en_US: DB-Agent
+    zh_Hans: 数据库智能体
+  description:
+    en_US: A database intelligent agent plugin based on the Large Language Model (LLM), designed specifically for non SQL background users, seamlessly integrated into the PolarDB for AI node, providing intelligent conversion capability from natural language to SQL (NL2SQL). By utilizing advanced language understanding technology, we can accurately parse complex instructions and generate high-precision query statements that include date operations, field mappings (such as "Valid ->isValid=1"), and custom SQL templates (such as default filter datastatus=1). Support the generation of visual charts and data summary analysis, helping users quickly obtain multidimensional insights. Significantly reduce the threshold for database usage and improve the efficiency of data analysis for non-technical users.
+    zh_Hans: 基于大语言模型（LLM）的数据库智能体插件，专为非SQL背景用户设计，无缝集成于PolarDB for AI节点，提供自然语言到SQL（NL2SQL）的智能转换能力。通过先进语言理解技术，精准解析复杂指令，生成含日期运算、字段映射（如“有效->isValid=1”）及自定义SQL模板（如默认筛选datastatus=1）的高精度查询语句。支持生成可视化图表及数据总结分析等功能，助力用户快速获取多维洞察。显著降低数据库使用门槛，提升非技术用户的数据分析效率。
+  icon: icon.svg
+tools:
+  - tools/polardb4ai_nl2chart.yaml
+  - tools/polardb4ai_nl2sql.yaml
+  - tools/polardb4ai_nl2sql_summary.yaml
+  - tools/polardb4ai_schema_index_show.yaml
+  - tools/polardb4ai_schema_index_build.yaml
+  - tools/polardb4ai_pattern_index_show.yaml
+  - tools/polardb4ai_pattern_index_editor.yaml
+  - tools/polardb4ai_llm_config_show.yaml
+  - tools/polardb4ai_llm_config_editor.yaml
+  - tools/polardb4ai_task_monitor.yaml
+extra:
+  python:
+    source: provider/polardb4ai_db_agent.py

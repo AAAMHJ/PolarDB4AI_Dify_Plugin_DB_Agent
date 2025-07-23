@@ -1,0 +1,174 @@
+identity:
+  name: polardb4ai_pattern_index_editor
+  author: polardb4ai
+  label:
+    en_US: pattern_index_editor
+    zh_Hans: 问题模板编辑器
+description:
+    human:
+        en_US: The problem template (pattern_index) editor is designed for specific domain knowledge and can help models generate SQL statements by referencing specific knowledge.
+        zh_Hans: 问题模板（pattern_index）编辑器，问题模板是为特定领域知识而制定的，能够帮助模型参考特定的知识来生成SQL语句。
+    llm:
+        pattern index editor.
+parameters:
+    - name: pattern_index_name
+      type: string
+      required: true
+      label:
+          en_US: pattern_index_name
+          zh_Hans: pattern_index表名
+      human_description:
+          en_US: None
+          zh_Hans: 请填写pattern_index表名。
+      llm_description: None
+      form: form
+    - name: pattern_id1
+      type: string
+      required: false
+      label:
+          en_US: pattern_id
+          zh_Hans: ID 1
+      human_description:
+          en_US: None
+          zh_Hans: 请填写pattern_ID。
+      llm_description: None
+      form: form
+    - name: pattern_question1
+      type: string
+      required: false
+      label:
+          en_US: pattern_question
+          zh_Hans: 问题 1
+      human_description:
+          en_US: None
+          zh_Hans: 请填写pattern_question。
+      llm_description: None
+      form: form
+    - name: pattern_sql1
+      type: string
+      required: false
+      label:
+          en_US: pattern_sql
+          zh_Hans: 答案SQL 1
+      human_description:
+          en_US: None
+          zh_Hans: 请填写pattern_sql。
+      llm_description: None
+      form: form
+    - name: pattern_id2
+      type: string
+      required: false
+      label:
+          en_US: pattern_id
+          zh_Hans: ID 2
+      human_description:
+          en_US: None
+          zh_Hans: 请填写pattern_ID。
+      llm_description: None
+      form: form
+    - name: pattern_question2
+      type: string
+      required: false
+      label:
+          en_US: pattern_question
+          zh_Hans: 问题 2
+      human_description:
+          en_US: None
+          zh_Hans: 请填写pattern_question。
+      llm_description: None
+      form: form
+    - name: pattern_sql2
+      type: string
+      required: false
+      label:
+          en_US: pattern_sql
+          zh_Hans: 答案SQL 2
+      human_description:
+          en_US: None
+          zh_Hans: 请填写pattern_sql。
+      llm_description: None
+      form: form
+    - name: rebuild
+      type: select
+      required: false
+      label:
+          en_US: Rebuild or not
+          zh_Hans: 是否重建
+      human_description:
+          en_US: Rebuild or not
+          zh_Hans: 请选择是否重建
+      llm_description: 
+          This parameter determines the pattern_index will be rebuilded or not.
+      form: form
+      options:
+          - value: 0
+            label:
+              en_US: Don't Rebuild
+              zh_Hans: 不重建
+          - value: 1
+            label:
+              en_US: Rebuild (default)
+              zh_Hans: 重建(默认)
+    - name: polardb_host
+      type: string
+      required: true
+      label:
+          en_US: Database Host
+          zh_Hans: 数据库主机
+      human_description:
+          en_US: The hostname or IP address of the MySQL database server.
+          zh_Hans: MySQL 数据库服务器的主机名或 IP 地址。
+      llm_description: The hostname/IP of the MySQL server (e.g., 'localhost' or '192.168.1.100').
+      form: form
+
+    - name: polardb_port
+      type: string
+      required: true
+      label:
+          en_US: Port
+          zh_Hans: 端口
+      human_description:
+          en_US: Port number to connect to the database (default is 3306).
+          zh_Hans: 数据库连接端口（默认为 3306）。
+      llm_description: Port number for database connection (default 3306).
+      form: form
+
+    - name: polardb_user
+      type: string
+      required: true
+      label:
+          en_US: Username
+          zh_Hans: 用户名
+      human_description:
+          en_US: Username for authenticating to the database.
+          zh_Hans: 连接数据库的用户名。
+      llm_description: Username to access the MySQL database.
+      form: form
+
+    - name: polardb_password
+      type: string
+      required: true
+      label:
+          en_US: Password
+          zh_Hans: 密码
+      human_description:
+          en_US: Password for the database user.
+          zh_Hans: 数据库用户的密码。
+      llm_description: Password for the database user (do not expose in logs).
+      form: form
+
+    - name: polardb_database
+      type: string
+      required: true
+      label:
+          en_US: Database Name
+          zh_Hans: 数据库名称
+      human_description:
+          en_US: Name of the database to connect to.
+          zh_Hans: 要连接的数据库名称。
+      llm_description: Name of the target database (e.g., 'mydb').
+      form: form
+
+extra:
+    python:
+        source: tools/polardb4ai_pattern_index_editor.py
