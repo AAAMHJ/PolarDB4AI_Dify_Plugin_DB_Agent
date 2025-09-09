@@ -19,12 +19,11 @@ class Polardb4aiSchemaIndexBuildTool(Tool):
         :param sql: 输入 SQL 语句
         :return: 返回操作类型 ('INSERT', 'DELETE', 'UPDATE', 'DDL', 'OTHER')
         """
-        # 正则表达式匹配 SQL 操作类型（忽略大小写）
         pattern = compile(
             r"""
-            ^(?:\s*--.*?$\s*)*              # 跳过单行注释（-- 或 # 开头）
-            (?:/\*.*?\*/\s*)*               # 跳过块注释（/* ... */）
-            (?:\s*\B/\*.*?\*/\s*)*          # 跳过块注释（更严格的匹配）
+            ^(?:\s*--.*?$\s*)*             
+            (?:/\*.*?\*/\s*)*              
+            (?:\s*\B/\*.*?\*/\s*)*         
             \b(INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|TRUNCATE|SELECT)\b
             """,
             IGNORECASE | DOTALL | VERBOSE
@@ -113,17 +112,14 @@ class Polardb4aiSchemaIndexBuildTool(Tool):
         sql3 = f"/*polar4ai*/SELECT * FROM PREDICT (MODEL _polar4ai_text2vec, SELECT '') WITH (mode='async', resource='schema',to_sample = {to_sample}{tables_included}{columns_excluded}) INTO {schema_index_name}"
         try:
             lines = self.execute_sql(sql1, tool_parameters)
-            # 检查 result 是否为字符串且以 "Error" 开头
             if isinstance(lines, str) and lines.startswith("Error"):
                 print(lines)
                 if lines.find("Unknown table")== -1:
                     raise Exception(f"0304 {lines}")
             lines2 = self.execute_sql(sql2, tool_parameters)
-            # 检查 result 是否为字符串且以 "Error" 开头
             if isinstance(lines2, str) and lines2.startswith("Error"):
                 raise Exception(f"0303 {lines2}")
             lines3 = self.execute_sql(sql3, tool_parameters)
-            # 检查 result 是否为字符串且以 "Error" 开头
             if isinstance(lines3, str) and lines3.startswith("Error"):
                 raise Exception(f"0302 {lines3}")
             

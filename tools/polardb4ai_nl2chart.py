@@ -20,12 +20,11 @@ class Polardb4aiNl2chartTool(Tool):
         :param sql: 输入 SQL 语句
         :return: 返回操作类型 ('INSERT', 'DELETE', 'UPDATE', 'DDL', 'OTHER')
         """
-        # 正则表达式匹配 SQL 操作类型（忽略大小写）
         pattern = compile(
             r"""
-            ^(?:\s*--.*?$\s*)*              # 跳过单行注释（-- 或 # 开头）
-            (?:/\*.*?\*/\s*)*               # 跳过块注释（/* ... */）
-            (?:\s*\B/\*.*?\*/\s*)*          # 跳过块注释（更严格的匹配）
+            ^(?:\s*--.*?$\s*)*           
+            (?:/\*.*?\*/\s*)*              
+            (?:\s*\B/\*.*?\*/\s*)*         
             \b(INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|TRUNCATE|SELECT)\b
             """,
             IGNORECASE | DOTALL | VERBOSE

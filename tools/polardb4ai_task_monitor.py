@@ -14,17 +14,11 @@ enable_ddl = False
 
 class Polardb4aiTaskMonitorTool(Tool):
     def get_sql_operation_type(self, sql):
-        """
-        使用正则表达式判断 SQL 操作类型
-        :param sql: 输入 SQL 语句
-        :return: 返回操作类型 ('INSERT', 'DELETE', 'UPDATE', 'DDL', 'OTHER')
-        """
-        # 正则表达式匹配 SQL 操作类型（忽略大小写）
         pattern = compile(
             r"""
-            ^(?:\s*--.*?$\s*)*              # 跳过单行注释（-- 或 # 开头）
-            (?:/\*.*?\*/\s*)*               # 跳过块注释（/* ... */）
-            (?:\s*\B/\*.*?\*/\s*)*          # 跳过块注释（更严格的匹配）
+            ^(?:\s*--.*?$\s*)*             
+            (?:/\*.*?\*/\s*)*               
+            (?:\s*\B/\*.*?\*/\s*)*          
             \b(INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|TRUNCATE|SELECT)\b
             """,
             IGNORECASE | DOTALL | VERBOSE
@@ -119,7 +113,6 @@ class Polardb4aiTaskMonitorTool(Tool):
                 flag = 1
                 for i in range(1, len(list1)):
                     lines = self.execute_sql(sql1, tool_parameters)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines, str) and lines.startswith("Error"):
                         raise Exception(f"0103 {lines}")
                     if lines.find("finish")!= -1:
@@ -152,7 +145,6 @@ class Polardb4aiTaskMonitorTool(Tool):
                     if flag == 0:
                         break
                     lines = self.execute_sql(sql1, tool_parameters)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines, str) and lines.startswith("Error"):
                         raise Exception(f"0102 {lines}")
                     if lines.find("finish")!=-1:

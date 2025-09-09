@@ -19,12 +19,11 @@ class Polardb4aiPatternIndexEditorTool(Tool):
         :param sql: 输入 SQL 语句
         :return: 返回操作类型 ('INSERT', 'DELETE', 'UPDATE', 'DDL', 'OTHER')
         """
-        # 正则表达式匹配 SQL 操作类型（忽略大小写）
         pattern = compile(
             r"""
-            ^(?:\s*--.*?$\s*)*              # 跳过单行注释（-- 或 # 开头）
-            (?:/\*.*?\*/\s*)*               # 跳过块注释（/* ... */）
-            (?:\s*\B/\*.*?\*/\s*)*          # 跳过块注释（更严格的匹配）
+            ^(?:\s*--.*?$\s*)*           
+            (?:/\*.*?\*/\s*)*           
+            (?:\s*\B/\*.*?\*/\s*)*        
             \b(INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|TRUNCATE|SELECT)\b
             """,
             IGNORECASE | DOTALL | VERBOSE
@@ -131,7 +130,6 @@ class Polardb4aiPatternIndexEditorTool(Tool):
                     sql1_1 = f"SELECT id FROM polar4ai_nl2sql_pattern_{pattern_index_name} where id = {pattern_id1}"
                     lines1_1 = self.execute_sql(sql1_1, tool_parameters)
                     print(lines1_1)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines1_1, str) and lines1_1.startswith("Error"):
                         raise Exception(f"0511 {lines1_1}")
                     prefix = "id"
@@ -142,19 +140,16 @@ class Polardb4aiPatternIndexEditorTool(Tool):
                     if lines1_1:
                         sql1_2 = f"UPDATE polar4ai_nl2sql_pattern_{pattern_index_name} SET pattern_question = '{pattern_question1}', pattern_description = '{pattern_question1}', pattern_sql = '{pattern_sql1}',pattern_params = '' WHERE id = {pattern_id1}"
                         lines1_2 = self.execute_sql(sql1_2, tool_parameters)
-                        # 检查 result 是否为字符串且以 "Error" 开头
                         if isinstance(lines1_2, str) and lines1_2.startswith("Error"):
                             raise Exception(f"0510 {lines1_2}")
                     else:
                         sql1_2 = f"INSERT INTO polar4ai_nl2sql_pattern_{pattern_index_name} (`id`,`pattern_question`,`pattern_description`,`pattern_sql`,`pattern_params`) VALUES ({pattern_id1},'{pattern_question1}','{pattern_question1}','{pattern_sql1}','')"
                         lines1_2 = self.execute_sql(sql1_2, tool_parameters)
-                        # 检查 result 是否为字符串且以 "Error" 开头
                         if isinstance(lines1_2, str) and lines1_2.startswith("Error"):
                             raise Exception(f"0509 {lines1_2}")
                 elif (pattern_question1=='' and pattern_sql1==''):
                     sql1_1 = f"DELETE FROM polar4ai_nl2sql_pattern_{pattern_index_name} WHERE id = {pattern_id1}"
                     lines1_1 = self.execute_sql(sql1_1, tool_parameters)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines1_1, str) and lines1_1.startswith("Error"):
                         raise Exception(f"0508 {lines1_1}")
             
@@ -163,7 +158,6 @@ class Polardb4aiPatternIndexEditorTool(Tool):
                     sql2_1 = f"SELECT id FROM polar4ai_nl2sql_pattern_{pattern_index_name} where id = {pattern_id2}"
                     lines2_1 = self.execute_sql(sql2_1, tool_parameters)
                     print(lines2_1)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines2_1, str) and lines2_1.startswith("Error"):
                         raise Exception(f"0507 {lines2_1}")  
                     prefix = "id"
@@ -174,38 +168,32 @@ class Polardb4aiPatternIndexEditorTool(Tool):
                     if lines2_1:
                         sql2_2 = f"UPDATE polar4ai_nl2sql_pattern_{pattern_index_name} SET pattern_question = '{pattern_question2}', pattern_description = '{pattern_question2}', pattern_sql = '{pattern_sql2}',pattern_params = '' WHERE id = {pattern_id2}"
                         lines2_2 = self.execute_sql(sql2_2, tool_parameters)
-                        # 检查 result 是否为字符串且以 "Error" 开头
                         if isinstance(lines2_2, str) and lines2_2.startswith("Error"):
                             raise Exception(f"0506 {lines2_2}")
                     else:
                         sql2_2 = f"INSERT INTO polar4ai_nl2sql_pattern_{pattern_index_name} (`id`,`pattern_question`,`pattern_description`,`pattern_sql`,`pattern_params`) VALUES ({pattern_id2},'{pattern_question2}','{pattern_question2}','{pattern_sql2}','')"
                         lines2_2 = self.execute_sql(sql2_2, tool_parameters)
-                        # 检查 result 是否为字符串且以 "Error" 开头
                         if isinstance(lines2_2, str) and lines2_2.startswith("Error"):
                             raise Exception(f"0505 {lines2_2}")
                 elif (pattern_question2=='' and pattern_sql2==''):
                     sql2_1 = f"DELETE FROM polar4ai_nl2sql_pattern_{pattern_index_name} WHERE id = {pattern_id2}"
                     lines2_1 = self.execute_sql(sql2_1, tool_parameters)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines2_1, str) and lines2_1.startswith("Error"):
                         raise Exception(f"0504 {lines2_1}")
             
             if rebuild == '1':
                 sql3_1 = f"/*polar4ai*/DROP TABLE {pattern_index_name}"
                 lines3_1 = self.execute_sql(sql3_1, tool_parameters)
-                # 检查 result 是否为字符串且以 "Error" 开头
                 if isinstance(lines3_1, str) and lines3_1.startswith("Error"):
                     print(lines3_1)
                     if lines3_1.find("Unknown table")== -1:
                         raise Exception(f"0503 {lines3_1}")
                 sql3_1 = f"/*polar4ai*/CREATE TABLE {pattern_index_name}(id integer, pattern_question text_ik_max_word, pattern_description text_ik_max_word, pattern_sql text_ik_max_word, pattern_params text_ik_max_word, pattern_tables text_ik_max_word, vecs vector_768, PRIMARY key (id))"
                 lines3_1 = self.execute_sql(sql3_1, tool_parameters)
-                # 检查 result 是否为字符串且以 "Error" 开头
                 if isinstance(lines3_1, str) and lines3_1.startswith("Error"):
                     raise Exception(f"0502 {lines3_1}")
                 sql3_1 = f"/*polar4ai*/SELECT * FROM PREDICT (MODEL _polar4ai_text2vec, SELECT '') WITH (mode='async', resource='pattern', pattern_table_name='polar4ai_nl2sql_pattern_{pattern_index_name}') INTO {pattern_index_name};"
                 lines3_1 = self.execute_sql(sql3_1, tool_parameters)
-                # 检查 result 是否为字符串且以 "Error" 开头
                 if isinstance(lines3_1, str) and lines3_1.startswith("Error"):
                     raise Exception(f"0501 {lines3_1}")
                 prefix = "task_id\n"

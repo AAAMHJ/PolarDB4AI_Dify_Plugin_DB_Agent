@@ -19,12 +19,11 @@ class Polardb4aiLlmConfigEditorTool(Tool):
         :param sql: 输入 SQL 语句
         :return: 返回操作类型 ('INSERT', 'DELETE', 'UPDATE', 'DDL', 'OTHER')
         """
-        # 正则表达式匹配 SQL 操作类型（忽略大小写）
         pattern = compile(
             r"""
-            ^(?:\s*--.*?$\s*)*              # 跳过单行注释（-- 或 # 开头）
-            (?:/\*.*?\*/\s*)*               # 跳过块注释（/* ... */）
-            (?:\s*\B/\*.*?\*/\s*)*          # 跳过块注释（更严格的匹配）
+            ^(?:\s*--.*?$\s*)*          
+            (?:/\*.*?\*/\s*)*             
+            (?:\s*\B/\*.*?\*/\s*)*        
             \b(INSERT|DELETE|UPDATE|CREATE|ALTER|DROP|TRUNCATE|SELECT)\b
             """,
             IGNORECASE | DOTALL | VERBOSE
@@ -123,14 +122,12 @@ class Polardb4aiLlmConfigEditorTool(Tool):
                 if not (text_condition1 or formula_function1 or is_functional1):
                     sql1_1 = f"DELETE FROM polar4ai_nl2sql_llm_config WHERE id = {config_id1}"
                     lines1_1 = self.execute_sql(sql1_1, tool_parameters)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines1_1, str) and lines1_1.startswith("Error"):
                         raise Exception(lines1_1)
                 else:
                     sql1_1 = f"SELECT id FROM polar4ai_nl2sql_llm_config where id = {config_id1}"
                     lines1_1 = self.execute_sql(sql1_1, tool_parameters)
                     print(lines1_1)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines1_1, str) and lines1_1.startswith("Error"):
                         raise Exception(lines1_1)
                     prefix = "id"
@@ -154,7 +151,6 @@ class Polardb4aiLlmConfigEditorTool(Tool):
                             raise Exception("Error: 无字段需要更新")
                         sql1_2 = f"UPDATE polar4ai_nl2sql_llm_config SET {update_info} WHERE id = {config_id1}"
                         lines1_2 = self.execute_sql(sql1_2, tool_parameters)
-                        # 检查 result 是否为字符串且以 "Error" 开头
                         if isinstance(lines1_2, str) and lines1_2.startswith("Error"):
                             raise Exception(lines1_2)
                     elif text_condition1 and formula_function1:
@@ -162,7 +158,6 @@ class Polardb4aiLlmConfigEditorTool(Tool):
                             is_functional1 = 1
                         sql1_2 = f"INSERT INTO polar4ai_nl2sql_llm_config (`id`,`is_functional`,`text_condition`,`formula_function`) VALUES ({config_id1},{is_functional1},'{text_condition1}','{formula_function1}')"
                         lines1_2 = self.execute_sql(sql1_2, tool_parameters)
-                        # 检查 result 是否为字符串且以 "Error" 开头
                         if isinstance(lines1_2, str) and lines1_2.startswith("Error"):
                             raise Exception(lines1_2)
                     else:
@@ -172,14 +167,12 @@ class Polardb4aiLlmConfigEditorTool(Tool):
                 if not (text_condition2 or formula_function2 or is_functional2):
                     sql2_1 = f"DELETE FROM polar4ai_nl2sql_llm_config WHERE id = {config_id2}"
                     lines2_1 = self.execute_sql(sql2_1, tool_parameters)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines2_1, str) and lines2_1.startswith("Error"):
                         raise Exception(lines2_1)
                 else:
                     sql2_1 = f"SELECT id FROM polar4ai_nl2sql_llm_config where id = {config_id2}"
                     lines2_1 = self.execute_sql(sql2_1, tool_parameters)
                     print(lines2_1)
-                    # 检查 result 是否为字符串且以 "Error" 开头
                     if isinstance(lines2_1, str) and lines2_1.startswith("Error"):
                         raise Exception(lines2_1)
                     prefix = "id"
@@ -203,7 +196,6 @@ class Polardb4aiLlmConfigEditorTool(Tool):
                             raise Exception("Error: 无字段需要更新")
                         sql2_2 = f"UPDATE polar4ai_nl2sql_llm_config SET {update_info} WHERE id = {config_id2}"
                         lines2_2 = self.execute_sql(sql2_2, tool_parameters)
-                        # 检查 result 是否为字符串且以 "Error" 开头
                         if isinstance(lines2_2, str) and lines2_2.startswith("Error"):
                             raise Exception(lines2_2)
                     elif text_condition2 and formula_function2:
@@ -211,7 +203,6 @@ class Polardb4aiLlmConfigEditorTool(Tool):
                             is_functional2 = 1
                         sql2_2 = f"INSERT INTO polar4ai_nl2sql_llm_config (`id`,`is_functional`,`text_condition`,`formula_function`) VALUES ({config_id2},{is_functional2},'{text_condition2}','{formula_function2}')"
                         lines2_2 = self.execute_sql(sql2_2, tool_parameters)
-                        # 检查 result 是否为字符串且以 "Error" 开头
                         if isinstance(lines2_2, str) and lines2_2.startswith("Error"):
                             raise Exception(lines2_2)
                     else:
